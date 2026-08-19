@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-    ActivityIndicator,
-    Pressable,
-    StyleSheet,
-    Text,
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
 } from 'react-native';
 import { Colors, FontSize, Radius, Spacing } from '../constants/theme';
 

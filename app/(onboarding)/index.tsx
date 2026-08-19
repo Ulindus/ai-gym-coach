@@ -2,19 +2,19 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
-    Dimensions,
-    Pressable,
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    View,
+  Dimensions,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
 import {
-    Colors,
-    FontSize,
-    Radius,
-    Spacing,
+  Colors,
+  FontSize,
+  Radius,
+  Spacing,
 } from '@/constants/theme';
 
 const { width } = Dimensions.get('window');

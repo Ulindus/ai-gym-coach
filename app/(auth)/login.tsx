@@ -2,21 +2,21 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    Pressable,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 
 import {
-    Colors,
-    FontSize,
-    Radius,
-    Spacing,
+  Colors,
+  FontSize,
+  Radius,
+  Spacing,
 } from '@/constants/theme';
 import { loginUser } from '@/services/auth';
 

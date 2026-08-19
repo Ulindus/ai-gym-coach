@@ -2,25 +2,25 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 
 import { auth } from '@/services/firebase';
 import { createUserProfile } from '@/services/firestore';
 
 import {
-    Colors,
-    FontSize,
-    Radius,
-    Spacing,
+  Colors,
+  FontSize,
+  Radius,
+  Spacing,
 } from '@/constants/theme';
 
 type FitnessLevel =
@@ -47,7 +47,16 @@ export default function ProfileSetupScreen() {
     useState<Goal>('fitness');
 
   const [loading, setLoading] = useState(false);
+const [trainingDays, setTrainingDays] =
+  useState<2 | 3 | 4 | 5 | 6>(3);
 
+const [workoutDuration, setWorkoutDuration] =
+  useState<20 | 30 | 45 | 60 | 90>(30);
+
+const [equipment, setEquipment] =
+  useState<
+    'none' | 'home' | 'basic_gym' | 'full_gym'
+  >('none');
   const handleSaveProfile = async () => {
     const currentUser = auth.currentUser;
 
@@ -122,6 +131,9 @@ export default function ProfileSetupScreen() {
         weight: parsedWeight,
         fitnessLevel,
         goal,
+        trainingDays,
+        workoutDuration,
+        equipment,
       });
 
       router.replace('/(tabs)');
@@ -360,7 +372,150 @@ export default function ProfileSetupScreen() {
             })}
           </View>
         </View>
+                                                       {/* Training Days */}
 
+<View style={styles.field}>
+  <Text style={styles.label}>
+    How many days can you train?
+  </Text>
+
+  <View style={styles.options}>
+    {[2, 3, 4, 5, 6].map((days) => {
+      const selected =
+        trainingDays === days;
+
+      return (
+        <Pressable
+          key={days}
+          onPress={() =>
+            setTrainingDays(
+              days as 2 | 3 | 4 | 5 | 6,
+            )
+          }
+          style={[
+            styles.option,
+            selected &&
+              styles.selectedOption,
+          ]}
+        >
+          <Text
+            style={[
+              styles.optionText,
+              selected &&
+                styles.selectedOptionText,
+            ]}
+          >
+            {days} days
+          </Text>
+        </Pressable>
+      );
+    })}
+  </View>
+</View>
+
+{/* Workout Duration */}
+
+<View style={styles.field}>
+  <Text style={styles.label}>
+    How long can you train?
+  </Text>
+
+  <View style={styles.options}>
+    {[20, 30, 45, 60, 90].map(
+      (duration) => {
+        const selected =
+          workoutDuration === duration;
+
+        return (
+          <Pressable
+            key={duration}
+            onPress={() =>
+              setWorkoutDuration(
+                duration as
+                  | 20
+                  | 30
+                  | 45
+                  | 60
+                  | 90,
+              )
+            }
+            style={[
+              styles.option,
+              selected &&
+                styles.selectedOption,
+            ]}
+          >
+            <Text
+              style={[
+                styles.optionText,
+                selected &&
+                  styles.selectedOptionText,
+              ]}
+            >
+              {duration} min
+            </Text>
+          </Pressable>
+        );
+      },
+    )}
+  </View>
+</View>
+
+{/* Equipment */}
+
+<View style={styles.field}>
+  <Text style={styles.label}>
+    Where do you train?
+  </Text>
+
+  <View style={styles.options}>
+    {[
+      {
+        value: 'none' as const,
+        label: 'No Equipment',
+      },
+      {
+        value: 'home' as const,
+        label: 'Home',
+      },
+      {
+        value: 'basic_gym' as const,
+        label: 'Basic Gym',
+      },
+      {
+        value: 'full_gym' as const,
+        label: 'Full Gym',
+      },
+    ].map((item) => {
+      const selected =
+        equipment === item.value;
+
+      return (
+        <Pressable
+          key={item.value}
+          onPress={() =>
+            setEquipment(item.value)
+          }
+          style={[
+            styles.option,
+            selected &&
+              styles.selectedOption,
+          ]}
+        >
+          <Text
+            style={[
+              styles.optionText,
+              selected &&
+                styles.selectedOptionText,
+            ]}
+          >
+            {item.label}
+          </Text>
+        </Pressable>
+      );
+    })}
+  </View>
+</View>
         {/* Save */}
         <Pressable
           onPress={handleSaveProfile}

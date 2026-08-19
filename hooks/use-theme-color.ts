@@ -1,9 +1,20 @@
 import { Colors } from '@/constants/theme';
 
-export type ThemeColorName = keyof typeof Colors;
+type ColorName = keyof typeof Colors;
 
 export function useThemeColor(
-  colorName: ThemeColorName,
+  props: {
+    light?: string;
+    dark?: string;
+  },
+  colorName: ColorName,
 ) {
+  // Our app uses one custom color system
+  // for both light/dark components.
+  //
+  // The light/dark values are kept in the
+  // function signature because Expo's default
+  // components still pass them.
+
   return Colors[colorName];
 }
