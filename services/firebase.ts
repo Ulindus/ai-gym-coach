@@ -2,17 +2,19 @@ import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyASULLIhe0NSOcKEgVqYv8XFp-CXqxHmgo',
-  authDomain: 'ai-gym-coach-b9626.firebaseapp.com',
-  projectId: 'ai-gym-coach-b9626',
-  storageBucket: 'ai-gym-coach-b9626.firebasestorage.app',
-  messagingSenderId: '38480270243',
-  appId: '1:38480270243:web:611bcb9658b9fc3f8d8016',
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId:
+    process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = getApps().length === 0
-  ? initializeApp(firebaseConfig)
-  : getApp();
+const app =
+  getApps().length === 0
+    ? initializeApp(firebaseConfig)
+    : getApp();
 
 const auth = getAuth(app);
 
