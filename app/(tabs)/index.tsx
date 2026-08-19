@@ -1,98 +1,134 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import AppButton from '../../components/AppButton';
+import AppCard from '../../components/AppCard';
+import { Colors, FontSize, Spacing } from '../../constants/theme';
+import { useResponsive } from '../../hooks/useResponsive';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const { horizontalPadding, isTablet } = useResponsive();
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          paddingHorizontal: horizontalPadding,
+        },
+      ]}
+    >
+      <Text style={styles.greeting}>Good evening 👋</Text>
+
+      <Text style={styles.title}>Ready to train?</Text>
+
+      <AppCard style={styles.heroCard}>
+        <Text style={styles.cardLabel}>TODAY'S WORKOUT</Text>
+
+        <Text style={styles.workoutTitle}>
+          Chest & Triceps
+        </Text>
+
+        <Text style={styles.description}>
+          Build strength and improve your upper body.
+        </Text>
+
+        <AppButton
+          title="Start Workout"
+          onPress={() => {}}
+        />
+      </AppCard>
+
+      <View style={[styles.statsRow, isTablet && styles.statsTablet]}>
+        <AppCard style={styles.statCard}>
+          <Text style={styles.statValue}>0</Text>
+          <Text style={styles.statLabel}>Workouts</Text>
+        </AppCard>
+
+        <AppCard style={styles.statCard}>
+          <Text style={styles.statValue}>0</Text>
+          <Text style={styles.statLabel}>Calories</Text>
+        </AppCard>
+
+        <AppCard style={styles.statCard}>
+          <Text style={styles.statValue}>0</Text>
+          <Text style={styles.statLabel}>Minutes</Text>
+        </AppCard>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background,
+    paddingTop: Spacing.xl,
+  },
+
+  greeting: {
+    color: Colors.textSecondary,
+    fontSize: FontSize.md,
+    marginBottom: Spacing.xs,
+  },
+
+  title: {
+    color: Colors.text,
+    fontSize: FontSize.xxxl,
+    fontWeight: '800',
+    marginBottom: Spacing.xl,
+  },
+
+  heroCard: {
+    padding: Spacing.lg,
+    marginBottom: Spacing.md,
+  },
+
+  cardLabel: {
+    color: Colors.primary,
+    fontSize: FontSize.xs,
+    fontWeight: '800',
+    letterSpacing: 1,
+  },
+
+  workoutTitle: {
+    color: Colors.text,
+    fontSize: FontSize.xl,
+    fontWeight: '800',
+    marginTop: Spacing.sm,
+  },
+
+  description: {
+    color: Colors.textSecondary,
+    fontSize: FontSize.sm,
+    lineHeight: 21,
+    marginVertical: Spacing.md,
+  },
+
+  statsRow: {
     flexDirection: 'row',
+    gap: Spacing.sm,
+  },
+
+  statsTablet: {
+    maxWidth: 900,
+  },
+
+  statCard: {
+    flex: 1,
     alignItems: 'center',
-    gap: 8,
+    paddingVertical: Spacing.lg,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  statValue: {
+    color: Colors.primary,
+    fontSize: FontSize.xl,
+    fontWeight: '800',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+
+  statLabel: {
+    color: Colors.textSecondary,
+    fontSize: FontSize.xs,
+    marginTop: Spacing.xs,
   },
 });
