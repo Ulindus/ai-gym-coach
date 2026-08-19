@@ -3,41 +3,33 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
+import { AuthProvider } from '@/hooks/use-auth';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  initialRouteName: '(onboarding)',
-};
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={DarkTheme}>
-      <Stack
-        initialRouteName="(onboarding)"
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen
-          name="(onboarding)"
-          options={{
+    <AuthProvider>
+      <ThemeProvider value={DarkTheme}>
+        <Stack
+          screenOptions={{
             headerShown: false,
           }}
-        />
+        >
+          <Stack.Screen name="(onboarding)" />
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="(tabs)" />
+        </Stack>
 
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-          }}
+        <StatusBar
+          style={
+            colorScheme === 'dark'
+              ? 'light'
+              : 'dark'
+          }
         />
-      </Stack>
-
-      <StatusBar
-        style={colorScheme === 'dark' ? 'light' : 'dark'}
-      />
-    </ThemeProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }

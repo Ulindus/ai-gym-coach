@@ -1,3 +1,4 @@
+
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -50,7 +51,7 @@ export default function OnboardingScreen() {
 
   const handleNext = () => {
     if (isLastSlide) {
-      router.replace('/(tabs)');
+      router.replace('/(auth)/register');
       return;
     }
 
@@ -58,24 +59,31 @@ export default function OnboardingScreen() {
   };
 
   const handleSkip = () => {
-    router.replace('/(tabs)');
+    router.replace('/(auth)/register');
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
+        {/* Top Bar */}
         <View style={styles.topBar}>
           <Text style={styles.logo}>
             AI GYM
           </Text>
 
           {!isLastSlide && (
-            <Pressable onPress={handleSkip}>
-              <Text style={styles.skip}>Skip</Text>
+            <Pressable
+              onPress={handleSkip}
+              hitSlop={10}
+            >
+              <Text style={styles.skip}>
+                Skip
+              </Text>
             </Pressable>
           )}
         </View>
 
+        {/* Main Content */}
         <View style={styles.main}>
           <View style={styles.visual}>
             <View style={styles.glow}>
@@ -100,19 +108,23 @@ export default function OnboardingScreen() {
           </View>
         </View>
 
+        {/* Bottom Section */}
         <View style={styles.bottom}>
+          {/* Pagination */}
           <View style={styles.pagination}>
             {slides.map((_, index) => (
               <View
                 key={index}
                 style={[
                   styles.dot,
-                  index === currentIndex && styles.activeDot,
+                  index === currentIndex &&
+                    styles.activeDot,
                 ]}
               />
             ))}
           </View>
 
+          {/* Continue / Get Started */}
           <Pressable
             onPress={handleNext}
             style={({ pressed }) => [
@@ -121,10 +133,14 @@ export default function OnboardingScreen() {
             ]}
           >
             <Text style={styles.buttonText}>
-              {isLastSlide ? 'Get Started' : 'Continue'}
+              {isLastSlide
+                ? 'Get Started'
+                : 'Continue'}
             </Text>
 
-            <Text style={styles.arrow}>→</Text>
+            <Text style={styles.arrow}>
+              →
+            </Text>
           </Pressable>
         </View>
       </View>
