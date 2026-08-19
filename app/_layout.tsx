@@ -6,7 +6,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export const unstable_settings = {
-  anchor: '(tabs)',
+  initialRouteName: '(onboarding)',
 };
 
 export default function RootLayout() {
@@ -14,14 +14,30 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={DarkTheme}>
-      <Stack>
+      <Stack
+        initialRouteName="(onboarding)"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen
+          name="(onboarding)"
+          options={{
+            headerShown: false,
+          }}
+        />
+
         <Stack.Screen
           name="(tabs)"
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+          }}
         />
       </Stack>
 
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      <StatusBar
+        style={colorScheme === 'dark' ? 'light' : 'dark'}
+      />
     </ThemeProvider>
   );
 }
